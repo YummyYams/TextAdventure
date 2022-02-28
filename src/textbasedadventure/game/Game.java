@@ -115,6 +115,7 @@ public class Game{
         if (gameRunning==false) {
         	System.out.println ("You lost, game over");
         }
+        return; 
     }
 
     public void processCommand(Command command){
@@ -272,10 +273,6 @@ public class Game{
     }
     
     public void help(){
-        
-    }
-    
-    public void quit(Command command){
         
     }
     
