@@ -227,6 +227,10 @@ public class Game{
         System.out.println (printString); 
     }
     
+    public void test() {
+    	
+    }
+    
     public void drink(Command command){
         String thingToDrink = ""; 
         if (!command.hasSecondWord()){
