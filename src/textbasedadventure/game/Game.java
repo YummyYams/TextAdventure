@@ -28,7 +28,7 @@ public class Game{
     }
     
     public String introText(){
-        String returnString = "You wake up standing in a house. This house has windows and a front door. \n You heard a voice from a hidden speaker saying, the only way you can leave is if you escape before the wild hog rider finds you. He also adds that there are objects hidden around the house that you need to have in order to escape. \n He ends by saying if you try to leave before grabbing all of the said items, you will die.";
+        String returnString = "You wake up standing in a house. This house has windows and a front door. \n You heard a voice from a hidden speaker saying, the only way you can leave is if you obtain all of the special items. Howver, there is a poisonous gas that eats away at your health every time you move. \n He ends by saying if you try to leave before grabbing all of the said items, you will die.";
         return returnString; 
     }
     
@@ -43,7 +43,7 @@ public class Game{
         Room kitchen = new Room ("kitchen", "You are in the kitchen.", " You are in the kitchen. In the kitchen, there is a refrigerator, some pots and pans, and a comically large spoon that is suspiciously dirty.  ");
         Room bedroom = new Room ("bedroom", "You are in the bedroom", "You are in the bedroom, and in said bedroom, there are 2 mini shields and a big shield.");
         Room bathroom = new Room ("bathroom","You are in the bathroom", "You are in the bathroom and in the bathroom, there is a window, a toilet, and some basic bathroom essentials, like toothpaste, shaving cream, and an oddly large toothbrush");
-        Room basement = new Room ("basement","You are in the basement.", "You are in the basement and in the basement. It is pitch black. However, you heard something breathing in the darkness. Suddenly, a wild hog rider appears. ");
+        Room basement = new Room ("basement","You are in the basement.", "You are in the basement. In the basement, it is pitch black. However, you sense the prescene of someone else. You walk forward and run into a large cutout of a banana. ");
         
         Item backpack = new Item ("backpack", "A backpack with room for about 7-8 average sized objects, or maybe one refrigerator. ");
         Item car = new Item ("car", "This car is a bright pink Mini Cooper, with a Lightning McQueen Sun Shield covering the winshield."); 
@@ -58,6 +58,7 @@ public class Game{
         Item toothpaste = new Item ("toothpaste", "A tube of minty toothpaste...you should take this");
         Item shavingcream = new Item ("shaving cream", "A can of blue shaving cream...dont throw this");
         Item toothbrush = new Item ("toothbrush", "A Lightning McQueen toothbrush that looks half eaten. "); 
+        Item bananacutout = new Item ("banana cutout", "A cutout of a banana...hope this helps you"); 
          
         livingRoom.setExit ("garage", garage);
         livingRoom.setExit ("kitchen", kitchen);
@@ -88,8 +89,10 @@ public class Game{
         minishield1.setDamage (25); 
         minishield2.setDamage (25);
         bigshield.setDamage (50); 
+        
         basement.setExit ("living room", livingRoom);
-
+        basement.setItem("banana cutout", bananacutout);
+        
         currentRoom = livingRoom;
         try {
                 cls_var.main(); 
@@ -102,7 +105,11 @@ public class Game{
     }
 
     public void play(){
-        while(gameRunning) {            
+    	if (gameRunning==false) {
+        	System.out.println ("You lost, game over");
+        	return;
+        }
+    	while(gameRunning) {            
             Command command = parser.getCommand(); 
             try {
                 cls_var.main(); 
@@ -112,10 +119,8 @@ public class Game{
             processCommand(command);
             System.out.println ("Moves: "+ counter); 
         }
-        if (gameRunning==false) {
-        	System.out.println ("You lost, game over");
-        }
-        return; 
+        
+        
     }
 
     public void processCommand(Command command){
@@ -143,9 +148,17 @@ public class Game{
                 System.out.println ("Quitting game...");
                 gameRunning=false;
                 break; 
+            case "help":
+            	help (command);
+            	break; 
         }
         counter++; 
-        player.adjustHealth(-50); 
+        if (counter < 10) {
+        	player.adjustHealth(-50); 
+        }
+        else {
+        	player.adjustHealth (-10);
+        }
     }
 
     public void grab(Command command){
@@ -227,9 +240,6 @@ public class Game{
         System.out.println (printString); 
     }
     
-    public void test() {
-    	
-    }
     
     public void drink(Command command){
         String thingToDrink = ""; 
@@ -245,9 +255,14 @@ public class Game{
         }
         Item drinkMe= player.getItem (thingToDrink);
         player.adjustHealth (drinkMe.getDamage());
+        
+        if (thingToDrink==null){
+            System.out.println ("you cannot drink that"); 
+            return; 
+        }
         else {
-            System.out.println ("You drank the " + drinkMe); 
-            currentRoom.setItem(item, itemToDrop);
+            System.out.println ("You drank the " + thingToDrink); 
+            player.removeItem(thingToDrink);
             System.out.println (currentRoom.getExitString()); 
             printInventory(); 
         }
@@ -276,18 +291,27 @@ public class Game{
         }
     }
     
-    public void help(){
-        
+    public void help(Command command){
+        if (!command.hasSecondWord()){
+        	System.out.println ("Here are the available commands."));
+        	(command) {
+        }
+        	case "go":
+        		
+        }
     }
     
     public void winGame(){
-        
+        //health must be greater than 100
+    	//must have certain items in inventory
     }
     
     public void loseGame(){
-        if (player.getHealth()== 0) {
-        	System.out.println ("Oh no, you died. Thats so unfortunate.");
-        	gameRunning=false; 
+        //ask why game doesnt end when health=0
+    	if (player.getHealth()<= 0) {
+    		gameRunning=false; 
+    		System.out.println ("Oh no, you died. Thats so unfortunate.");
+        	
         	
         }
     }
