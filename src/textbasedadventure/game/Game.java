@@ -293,7 +293,7 @@ public class Game{
     
     public void help(Command command){
         if (!command.hasSecondWord()){
-        	System.out.println ("Here are the available commands."));
+        	System.out.println ("Here are the available commands: \n go: type in 'go' followed by the exit you would like to go to. \n grab: type in 'grab' followed by the item you would like to pick up. \n drop: type in 'drop' followed by the item you would like to remove from your inventory. \n "));
         	(command) {
         }
         	case "go":
