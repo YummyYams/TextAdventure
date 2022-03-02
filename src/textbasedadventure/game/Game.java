@@ -22,6 +22,7 @@ public class Game{
     public void printInformation(){
         System.out.println (currentRoom.getExitString()); 
         System.out.println (currentRoom.getShortDescription());
+        System.out.println (currentRoom.getLongDescription());
         System.out.println ("Health: " + player.getHealth());
         System.out.println (currentRoom.getInventoryString());
         System.out.println (player.getInventoryString());
@@ -131,18 +132,23 @@ public class Game{
                 break;  
             case "go":
                 goRoom (command);
+                counter++;
                 break;
             case "grab":
                 grab(command);
+                counter++;
                 break;
             case "drop":
                 drop (command);
+                counter++;
                 break;
             case "inspect":
                 inspect (command);
+                counter++;
                 break;
             case "drink": 
                 drink (command); 
+                counter++;
                 break; 
             case "quit":
                 System.out.println ("Quitting game...");
@@ -152,11 +158,11 @@ public class Game{
             	help (command);
             	break; 
         }
-        counter++; 
         if (counter < 10) {
-        	player.adjustHealth(-50); 
+        	player.adjustHealth(-5); 
         }
-        else {
+        else if (counter == 10) {
+        	System.out.println ("The poison is getting worse, you will lose health faster now."); 
         	player.adjustHealth (-10);
         }
     }
@@ -292,13 +298,32 @@ public class Game{
     }
     
     public void help(Command command){
-        if (!command.hasSecondWord()){
+        
+    	if (!command.hasSecondWord()){
         	System.out.println ("Here are the available commands: \n go: type in 'go' followed by the exit you would like to go to. \n grab: type in 'grab' followed by the item you would like to pick up. \n drop: type in 'drop' followed by the item you would like to remove from your inventory. \n inspect: type in 'inspect' followed by the item you'd like to learn more about. \n drink: type in 'drink' followed by the potion you'd like to drink (mini shield1, mini shield2, big shield). \n quit: type in 'quit' to end the game.");
         	//(command) {
         }
-        	//case "go":
-        		
-        
+    	else {
+    		switch (command.getSecondWord()) {
+    		case "go":
+    			System.out.println ("go: type in 'go' followed by the exit you would like to go to to move to a new room.");
+    			break; 
+    		case "grab":
+    			System.out.println ("grab: type in 'grab' followed by the item you would like to pick up."); 
+    			break;
+    		case "drop":
+    			System.out.println("drop: type in 'drop' followed by the item you would like to remove from your inventory.");
+    			break; 
+    		case "inspect":
+    			System.out.println("inspect: type in 'inspect' followed by the item you'd like to learn more about.");
+    			break;
+    		case "drink":
+    			System.out.println("drink: type in 'drink' followed by the potion you'd like to drink (mini shield1, mini shield2, big shield).");
+    			break;
+    		case "quit": 
+    			System.out.println ("quit: type in 'quit' to end the game.");
+    		}
+    	}
     }
     
     public void winGame(){
