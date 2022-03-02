@@ -293,12 +293,12 @@ public class Game{
     
     public void help(Command command){
         if (!command.hasSecondWord()){
-        	System.out.println ("Here are the available commands: \n go: type in 'go' followed by the exit you would like to go to. \n grab: type in 'grab' followed by the item you would like to pick up. \n drop: type in 'drop' followed by the item you would like to remove from your inventory. \n "));
-        	(command) {
+        	System.out.println ("Here are the available commands: \n go: type in 'go' followed by the exit you would like to go to. \n grab: type in 'grab' followed by the item you would like to pick up. \n drop: type in 'drop' followed by the item you would like to remove from your inventory. \n inspect: type in 'inspect' followed by the item you'd like to learn more about. \n drink: type in 'drink' followed by the potion you'd like to drink (mini shield1, mini shield2, big shield). \n quit: type in 'quit' to end the game.");
+        	//(command) {
         }
-        	case "go":
+        	//case "go":
         		
-        }
+        
     }
     
     public void winGame(){
